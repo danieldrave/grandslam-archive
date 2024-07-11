@@ -65,7 +65,7 @@
     public static function save ($data)
     {
       $db = fopen(__DIR__ . './../db.json', 'w');
-      fwrite($db, json_encode($data, JSON_PRETTY_PRINT));
+      fwrite($db, json_encode($data, JSON_UNESCAPED_UNICODE));
       fclose($db);
     }
 
