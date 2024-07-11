@@ -12,8 +12,42 @@
      */
     public static function init ()
     {
-      error_log('Collecting data for: '. self::MENS_TENNIS);
-      error_log('Collecting data for: '. self::WOMENS_TENNIS);
+      foreach ([self::MENS_TENNIS, self::WOMENS_TENNIS] as $results) {
+        self::collect($results);
+      }
+    }
+
+    public static function collect ($url)
+    {
+      error_log('Collecting data for: ' . $url);
+      libxml_use_internal_errors(true);
+      $html = file_get_contents($url);
+      $dom = new DOMDocument();
+      $dom->loadHTML($html);
+
+      $table = $dom->getElementsByTagName('table')->item(0);
+      $results = $table->getElementsByTagName('tr');
+      $results = iterator_to_array($results);
+      // Remove table headers
+      array_shift($results);
+      array_shift($results);
+
+      $data = [];
+
+      foreach ($results as $result) {
+        $rowData = [];
+        $cells = $result->getElementsByTagName('td');
+
+        $grandslam = $cells->item(0)->textContent;
+        $year = $cells->item(1)->textContent;
+
+        error_log('Processing data for ' . $grandslam . ' ' . $year);
+        foreach ($cells as $cell) {
+          $rowData[] = $cell->nodeValue;
+        }
+
+        $data[] = $rowData;
+      }
     }
 
   }
