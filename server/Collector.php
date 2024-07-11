@@ -8,7 +8,7 @@
      * Initialises data collection for the latest ESPN grandslam results
      * - An initial run collected all the data
      * - Subsequent runs will be run via "php serve.php" after each grand slam in order to update local JSON database
-     * @returns {void}
+     * @return {void}
      */
     public static function init ()
     {
@@ -17,6 +17,11 @@
       }
     }
 
+    /**
+     * Collects data from ESPN
+     * @param {String} $url - the URL of the table resource
+     * @return {void}
+     */
     public static function collect ($url)
     {
       error_log('Collecting data for: ' . $url);
@@ -35,19 +40,33 @@
       $data = [];
 
       foreach ($results as $result) {
-        $rowData = [];
-        $cells = $result->getElementsByTagName('td');
+        $rowData = new stdClass();
 
+        $cells = $result->getElementsByTagName('td');
         $grandslam = $cells->item(0)->textContent;
         $year = $cells->item(1)->textContent;
 
         error_log('Processing data for ' . $grandslam . ' ' . $year);
-        foreach ($cells as $cell) {
-          $rowData[] = $cell->nodeValue;
+        foreach ($cells as $key => $cell) {
+          $rowData->$key = $cell->nodeValue;
         }
 
         $data[] = $rowData;
       }
+
+      self::save($data);
+    }
+
+    /**
+     * Saves database to a local database
+     * @param {Array} $data - the array of data
+     * @return {void}
+     */
+    public static function save ($data)
+    {
+      $db = fopen('../db.json', 'w');
+      fwrite($db, json_encode($data, JSON_PRETTY_PRINT));
+      fclose($db);
     }
 
   }
