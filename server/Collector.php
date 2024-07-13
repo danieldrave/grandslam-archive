@@ -8,19 +8,21 @@
      * Initialises data collection for the latest ESPN grandslam results
      * - An initial run collected all the data
      * - Subsequent runs will be run via "php serve.php" after each grand slam in order to update local JSON database
-     * @return {void}
+     * @return void
      */
     public static function init ()
     {
+      $db = [];
       foreach ([self::MENS_TENNIS, self::WOMENS_TENNIS] as $results) {
-        self::collect($results);
+        $db = array_merge($db, self::collect($results));
       }
+      self::save($db);
     }
 
     /**
-     * Collects data from ESPN
-     * @param {String} $url - the URL of the table resource
-     * @return {void}
+     * Collects data from ESPN resource
+     * @param String $url - the URL of the table resource
+     * @return Array<Object>
      */
     public static function collect ($url)
     {
@@ -54,13 +56,13 @@
         $data[] = $rowData;
       }
 
-      self::save($data);
+      return $data;
     }
 
     /**
      * Saves database to a local database
-     * @param {Array} $data - the array of data
-     * @return {void}
+     * @param Array<Object> $data - the array of data
+     * @return void
      */
     public static function save ($data)
     {
