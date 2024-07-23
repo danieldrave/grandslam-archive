@@ -18,46 +18,40 @@ a {
   color: seagreen
 }
 
-.grandslams {
-  position: relative;
-  overflow: auto;
-  max-height: 600px;
-  margin: 1rem 0;
-  border-radius: 4px;
-
-  table {
-    width: 100%;
-    table-layout: auto;
-    font-size: 1rem;
-    text-align: center;
-    border-collapse: collapse;
-
-    tr:nth-of-type(odd) {
-      td {
-        background: var(--cell-color);
-      }
-    }
-
-    th, td {
-      padding: .5rem;
-      border: 1px solid var(--border-color);
-    }
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .grandslams {
-    max-height: fit-content;
-    table {
-      table-layout: fixed;
-    }
-  }
-}
-
 input {
   width: 100%;
   font-size: 1rem;
   padding: 1rem;
   border: 1px solid var(--border-color);
   border-radius: 4px;
+}
+
+.grandslams {
+  position: relative;
+  overflow: auto;
+  margin: 1rem 0;
+  border-radius: 4px;
+}
+
+table {
+    width: 100%;
+    table-layout: auto;
+    font-size: 1rem;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+tr:nth-of-type(odd) > td {
+  background: var(--cell-color);
+}
+
+th, td {
+  padding: .5rem;
+  border: 1px solid var(--border-color);
+}
+
+@media screen and (min-width: 768px) {
+  table {
+    table-layout: fixed;
+  }
 }
