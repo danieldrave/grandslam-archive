@@ -24,7 +24,7 @@ php server/serve.php
 ```
 
 ## Future Development
-I will continue to run the server collection after every grandslam result to keep the database accurate. I will monitor ESPN for markup changes.
+I will continue to run the server collection after every grandslam result to keep the database accurate. I will monitor ESPN for markup changes. I will continue to enhance the app, when time allows!
 
 ## Top Tips
 Add the website as a shortcut on phone's home screen to access the client quickly. Otherwise, the client can be viewed at [https://danieldrave.github.io/grandslam-archive/client/](https://danieldrave.github.io/grandslam-archive/client/)
