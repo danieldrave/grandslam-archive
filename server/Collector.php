@@ -50,7 +50,7 @@
 
         error_log('Processing data for ' . $grandslam . ' ' . $year);
         foreach ($cells as $key => $cell) {
-          $rowData->$key = $cell->nodeValue;
+          $rowData->$key = htmlspecialchars($cell->nodeValue);
         }
 
         $data[] = $rowData;
